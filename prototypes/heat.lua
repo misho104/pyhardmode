@@ -187,11 +187,11 @@ for _, coal_plant in pairs {
         name = coal_plant .. "-animation",
         icon = data.raw["assembling-machine"][coal_plant].icon,
         icon_size = 64,
-        flags = {"placeable-neutral", "player-creation", "not-on-map"},
-        collision_box = data.raw["assembling-machine"][coal_plant].collision_box,
+        flags = {"placeable-neutral", "player-creation", "not-on-map", "not-blueprintable", "not-deconstructable"},
         collision_mask = {layers = {}},
         selectable_in_game = false,
         hidden = true,
+        hidden_in_factoriopedia = true,
         animations = data.raw["assembling-machine"][coal_plant].graphics_set.animation
     }
     for _, layer in pairs(animation.animations.layers) do
@@ -202,11 +202,11 @@ for _, coal_plant in pairs {
         name = coal_plant .. "-picture",
         icon = data.raw["assembling-machine"][coal_plant].icon,
         icon_size = 64,
-        flags = {"placeable-neutral", "player-creation", "not-on-map"},
-        collision_box = data.raw["assembling-machine"][coal_plant].collision_box,
+        flags = {"placeable-neutral", "player-creation", "not-on-map", "not-blueprintable", "not-deconstructable"},
         collision_mask = {layers = {}},
         selectable_in_game = false,
         hidden = true,
+        hidden_in_factoriopedia = true,
         picture = data.raw["assembling-machine"][coal_plant].graphics_set.animation
     }
     data:extend {animation, picture}

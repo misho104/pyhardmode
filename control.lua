@@ -66,9 +66,6 @@ script.on_nth_tick(87, function(event)
                 force = coal_plant.force_index
             }
             animation.destructible = false
-            animation.operable = false
-            animation.minable = false
-            animation.rotatable = false
             storage.composite_entities[unit_number] = {animation}
             storage.coal_plants[unit_number] = nil
         end

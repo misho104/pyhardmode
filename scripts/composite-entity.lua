@@ -24,9 +24,6 @@ script.on_event(on_built, function(event)
     local sub_entities = f(entity)
     for _, sub_entity in pairs(sub_entities) do
         sub_entity.destructible = false
-        sub_entity.operable = false
-        sub_entity.minable = false
-        sub_entity.rotatable = false
     end
     storage.composite_entities[entity.unit_number] = sub_entities
 end)
