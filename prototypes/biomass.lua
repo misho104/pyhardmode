@@ -1,7 +1,22 @@
+local function remove_compost_tooltip(prototype)
+    if not prototype.custom_tooltip_fields then return end
+
+    for i, tooltip in ipairs(prototype.custom_tooltip_fields) do
+        if type(tooltip.name) == "table" and tooltip.name[1] == "item-description.compost-amount" then
+            table.remove(prototype.custom_tooltip_fields, i)
+            break
+        end
+    end
+
+    if next(prototype.custom_tooltip_fields) == nil then
+        prototype.custom_tooltip_fields = nil
+    end
+end
+
 local function undo_biomass(item, type)
     local prototype = data.raw[type][item]
     if not prototype then error(item) end
-    prototype.localised_description = nil
+    remove_compost_tooltip(prototype)
     RECIPE("biomass-" .. item):remove_unlock("compost")
     data.raw.recipe["biomass-" .. item] = nil
 end
@@ -41,8 +56,8 @@ local function nerf_biomass(item, type, multiplier)
     local input = data.raw.recipe["biomass-" .. item].ingredients[1]
     local biomass_amount = data.raw.recipe["biomass-" .. item].results[1].amount
     input.amount = input.amount * multiplier
-    prototype.localised_description = nil
-    py.add_to_description(type, prototype, {"item-description.compost-amount", tostring(math.floor(biomass_amount / input.amount * 10) / 10)})
+    remove_compost_tooltip(prototype)
+    py.add_to_description(prototype, {"item-description.compost-amount"}, {"", tostring(math.floor(biomass_amount / input.amount * 10) / 10), " [item=biomass]"})
 end
 
 nerf_biomass("kicalk-seeds", "item", 2)
