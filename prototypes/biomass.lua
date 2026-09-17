@@ -42,7 +42,16 @@ local function nerf_biomass(item, type, multiplier)
     local biomass_amount = data.raw.recipe["biomass-" .. item].results[1].amount
     input.amount = input.amount * multiplier
     prototype.localised_description = nil
-    py.add_to_description(type, prototype, {"item-description.compost-amount", tostring(math.floor(biomass_amount / input.amount * 10) / 10)})
+    --- remove and add description
+    if prototype.custom_tooltip_fields then
+        for i, item in ipairs(prototype.custom_tooltip_fields) do
+            if item.name[1] == "item-description.compost-amount" and item.value[3] == " [item=biomass]" then
+                table.remove(prototype.custom_tooltip_fields, i)
+                break
+            end
+        end
+    end
+    py.add_to_description(prototype, {"item-description.compost-amount"}, {"", tostring(math.floor(biomass_amount / input.amount * 10) / 10), " [item=biomass]"})
 end
 
 nerf_biomass("kicalk-seeds", "item", 2)
